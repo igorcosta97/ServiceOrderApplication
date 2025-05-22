@@ -3,6 +3,7 @@ using Scalar.AspNetCore;
 using ServiceOrderApplication.Data;
 using ServiceOrderApplication.Services;
 using Serilog;
+using ServiceOrderApplication.Profiles;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -22,7 +23,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
     options.UseMySql(connectionString, serverVersion);
 });
+builder.Services.AddAutoMapper(typeof(Program));
+
 builder.Services.AddScoped<ClientService>();
+builder.Services.AddScoped<IClientService, ClientService>();
+
 
 
 var app = builder.Build();
